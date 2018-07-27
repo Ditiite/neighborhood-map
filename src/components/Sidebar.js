@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { markers } from '../markers/markers';
 import { GoogleApiWrapper } from 'google-maps-react';
+import sortBy from 'sort-by';
 
 class Sidebar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            query: "",
             places: [],
             markers: []
         };
@@ -24,60 +24,107 @@ class Sidebar extends Component {
         }
 
         this.placeSearchService = new this.props.google.maps.places.AutocompleteService();
-        this.geocoder = new this.props.google.maps.Geocoder;
-    }
-
-    handleChange = (event) => {
-        this.setState({
-            query: event.target.value
-        })
+        this.geocoder = new this.props.google.maps.Geocoder();
     }
 
     search = () => {
-        this.placeSearchService.getPlacePredictions({ input: this.state.query }, (data) => {
-            if (!data.length) {
-                console.log("Not found!");
-                return;
-            }
-            this.setState({
-                places: data
-            });
+        const searchInputEl = document.querySelector("input[name=search]");
+        const searchBy = searchInputEl.value;
 
-            data.forEach((place) => {
-                this.geocoder.geocode({
-                    'placeId': place.place_id
-                }, (results, status) => {
-                    if (status === "OK" && results.length > 0) {
-                        const placeDetails = results[0];
-                        const marker = {
-                            position: {
-                                lat: placeDetails.geometry.location.lat(),
-                                lng: placeDetails.geometry.location.lng(),
-                            },
-                            name: place.description,
-                            title: placeDetails.formatted_address
-                        }
-                        this.props.pushMarker(marker);
+        this.getPlaces(searchBy, (places) => {
+            this.createMarkers(places, (receivedMarkers) => {
+                this.props.updateMarkers(receivedMarkers);
+            });
+        });
+     
+    }
+
+    /**
+     * Query details like coordinates from google api. 
+     * Create marker combining the details
+     * @param {Array} places Places retrieved form google api
+     */
+    createMarkers(places, cb) {
+        const _markers = [];
+        const waitingResults = places.length;
+        let receivedResults = 0;
+
+        places.forEach((place) => {
+            this.geocoder.geocode({
+                'placeId': place.place_id
+            }, (results, status) => {
+                if (status === "OK") {
+                    const placeDetails = results[0];
+                    const marker = {
+                        id: place.place_id,
+                        position: {
+                            lat: placeDetails.geometry.location.lat(),
+                            lng: placeDetails.geometry.location.lng(),
+                        },
+                        name: place.description,
+                        title: placeDetails.formatted_address
                     }
-                });
+                    _markers.push(marker);
+                }
+
+                // Increment received
+                receivedResults++;
+                // Check if we got all results
+                if (receivedResults === waitingResults) {
+                    cb(_markers);
+                }
             });
         });
     }
-    
+
+    getPlaces(searchBy, cb) {
+        this.placeSearchService.getPlacePredictions({ input: searchBy }, (data, status) => {
+            if (status !== "OK") {
+                console.log("Not found!");
+                return;
+            }
+            
+            cb(data);
+        });
+    }
+
+
+    filterList = (event, places) => {
+        const filterInputEl = document.querySelector("input[name=filter]");
+        const filterBy = filterInputEl.value.toLowerCase();
+
+        let updatedList = this.state.places.filter(place => {
+            const targetText = place.description.toLowerCase();
+            return targetText.search(filterBy) !== -1;
+        });
+
+        
+        this.setState({ 
+            places: updatedList 
+        });
+    }
+
     render() {
         return (
             <aside className="sidebar">
                 <input
+                    className="input"
                     type="text"
                     name="search"
-                    placeholder="Please insert place name"
-                    onChange={this.handleChange}
+                    placeholder="Search For ..."
                 />
-                <button onClick={this.search}>Filter</button>
-                <ul>
-                    { 
-                        this.state.places.map((place) => {
-                            return <li key={place.id}>{place.description}</li>
+                <button className="btn" onClick={this.search}>Search</button>
+                <input
+                    className="input"
+                    type="text"
+                    name="filter"
+                    placeholder="Bilter By ..."
+                />
+                <button className="btn" onClick={this.filterList}>Filter</button>
+                <ul className="place-names">
+                    {
+                        this.props.markers.map((place) => {
+                            return <li key={place.id}>{place.title}</li>
                         })
                     }
                 </ul>
