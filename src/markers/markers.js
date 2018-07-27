@@ -2,7 +2,8 @@ export const markers = [
     {
         title: 'Līvānu pilsēta, LV-5316, Latvia',
         name: 'Līvāni',
-        position: { lat: 56.355370, lng: 26.163225 }
+        position: { lat: 56.355370, lng: 26.163225 },
+        type: 'museo'
     },
     {
         title: 'Aglona Parish, LV-5304, Latvia',
