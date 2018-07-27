@@ -5,17 +5,19 @@ import GoogleApiWrapper from './components/MapContainer';
 
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			marker: []
+		}
+	}
+
+	
 	render() {
 		return (
-			<div className="App">
-				<h1>Welcome to my neighborhood!</h1>
-				<div className="sidebar">
-
-				</div>
-				<div id="map">
-					<GoogleApiWrapper />
-				</div>
-			</div>
+			<React.Fragment>
+				<GoogleApiWrapper />
+			</React.Fragment>
 		);
 	}
 }
