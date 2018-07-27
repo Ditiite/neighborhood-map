@@ -4,17 +4,8 @@ import { GoogleApiWrapper } from 'google-maps-react';
 import sortBy from 'sort-by';
 
 class Sidebar extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            places: [],
-            markers: []
-        };
-
-        this.placeSearchService = null;
-        this.geocoder = null;
-    }
+    placeSearchService = null;
+    geocoder = null;
 
     componentDidMount() {
         const status = this.props.google.maps.places.PlacesServiceStatus.OK;
@@ -34,6 +25,7 @@ class Sidebar extends Component {
         this.getPlaces(searchBy, (places) => {
             this.createMarkers(places, (receivedMarkers) => {
                 this.props.updateMarkers(receivedMarkers);
+                document.querySelector("input[name=filter]").value = "";
             });
         });
      
@@ -93,15 +85,13 @@ class Sidebar extends Component {
         const filterInputEl = document.querySelector("input[name=filter]");
         const filterBy = filterInputEl.value.toLowerCase();
 
-        let updatedList = this.state.places.filter(place => {
-            const targetText = place.description.toLowerCase();
+        let updatedList = this.props.markers.filter(place => {
+            const targetText = place.title.toLowerCase();
             return targetText.search(filterBy) !== -1;
         });
 
         
-        this.setState({ 
-            places: updatedList 
-        });
+        this.props.updateFilteredMarkers(updatedList);
     }
 
     render() {
@@ -123,7 +113,7 @@ class Sidebar extends Component {
                 <button className="btn" onClick={this.filterList}>Filter</button>
                 <ul className="place-names">
                     {
-                        this.props.markers.map((place) => {
+                        this.props.filteredmarkers.map((place) => {
                             return <li key={place.id}>{place.title}</li>
                         })
                     }

@@ -13,7 +13,8 @@ export class MapContainer extends Component {
             lat: 56.345706,
             lng: 26.195000
         },
-        markers: [...defaultMarkers]
+        markers: [...defaultMarkers],
+        filteredmarkers: [...defaultMarkers]
     };
 
     onMarkerClick = (props, marker, e) =>{
@@ -23,11 +24,11 @@ export class MapContainer extends Component {
             showingInfoWindow: true
         });
         //When click on marker will have bounce animation
-        if (marker.getAnimation() !== null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
-        }
+        // if (marker.getAnimation() !== null) {
+        //     marker.setAnimation(null);
+        // } else {
+        //     marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
+        // }
     }
 
     onMapClicked = (props) => {
@@ -41,11 +42,20 @@ export class MapContainer extends Component {
 
     /**
      * set new markers to our state
+     * refresh the filter list with mainone
      * @param {Object} marker 
      */
     updateMarkers = (markers) => {
         this.setState({
-            markers
+            markers: [...markers],
+            filteredmarkers: [...markers]
+        });
+    }
+
+    updateFilteredMarkers = (filteredmarkers) => {
+        //console.log("Updated filtered list", filteredmarkers);
+        this.setState({
+            filteredmarkers: [...filteredmarkers]
         });
     }
 
@@ -54,9 +64,9 @@ export class MapContainer extends Component {
         let bounds = new this.props.google.maps.LatLngBounds();
         let animation = this.props.google.maps.Animation.DROP;
        
-        const markers = this.state.markers;
+        const filteredmarkers = this.state.filteredmarkers;
 
-        markers.forEach((marker) =>{
+        filteredmarkers.forEach((marker) =>{
             bounds.extend(marker.position);
         });
 
@@ -64,7 +74,10 @@ export class MapContainer extends Component {
             <React.Fragment>
                 <Sidebar
                     markers={this.state.markers}
-                    handleChange={this.handleChange} updateMarkers={this.updateMarkers}/>
+                    filteredmarkers={this.state.filteredmarkers}
+                    updateMarkers={this.updateMarkers}
+                    updateFilteredMarkers={this.updateFilteredMarkers}
+                />
                 <div className="map">
                     <Map
                         styles={styles}
@@ -73,15 +86,16 @@ export class MapContainer extends Component {
                         zoom={7}
                         onClick={this.onMapClicked}
                         bounds={bounds} >
-
-                    { markers.map((mark, i) => {
+                    {
+                        filteredmarkers.map((mark, i) => {
                             return <Marker onClick={this.onMarkerClick}
                                 key={i}
                                 name={mark.name}
                                 title={mark.title}
                                 position={mark.position}
                                 animation={animation} />
-                    })}
+                        })
+                    }
                     
                         <InfoWindow
                             marker={this.state.activeMarker}

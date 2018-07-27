@@ -11,7 +11,8 @@
 .map {
 	bottom:0px;
 	height: 100%;
-	left: 362px;
+	width: 80%;
+	left: 20%;
 	position: absolute;
 	right: 0px;
 }
@@ -23,7 +24,7 @@ SIDEBAR
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	hyphens: auto;
-	width: 400px;
+	width: 20%;
 	height: 100%;
 	position: absolute;
 	line-height: 2em;
@@ -33,7 +34,7 @@ SIDEBAR
 .input {
 	border: none;
 	border-bottom: 2px solid var(--text-color);
-	width: 250px;
+	width: 80%;
 }
 
 .btn {
