@@ -17,7 +17,18 @@ export class MapContainer extends Component {
         filteredmarkers: [...defaultMarkers]
     };
 
-    onMarkerClick = (props, marker, e) =>{
+    // makeMarkerIcon = () => {
+    //     var markerImage = new google.maps.MarkerImage(
+    //         'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + 'FFFF24' +
+    //         '|40|_|%E2%80%A2',
+    //         new google.maps.Size(21, 34),
+    //         new google.maps.Point(0, 0),
+    //         new google.maps.Point(10, 34),
+    //         new google.maps.Size(21, 34));
+    //     return markerImage;
+    // }
+
+    onMarkerClick = (props, marker, e) => {
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
@@ -63,13 +74,15 @@ export class MapContainer extends Component {
 
         let bounds = new this.props.google.maps.LatLngBounds();
         let animation = this.props.google.maps.Animation.DROP;
-       
+
         const filteredmarkers = this.state.filteredmarkers;
 
-        filteredmarkers.forEach((marker) =>{
+        filteredmarkers.forEach((marker) => {
             bounds.extend(marker.position);
         });
 
+        const icons = 'http://www.clker.com/cliparts/W/Y/G/I/L/4/purple-pin.svg';
+        //const icons = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         return (
             <React.Fragment>
                 <Sidebar
@@ -82,21 +95,28 @@ export class MapContainer extends Component {
                     <Map
                         styles={styles}
                         google={this.props.google}
-                        initialCenter ={this.state.initialCenter}
+                        initialCenter={this.state.initialCenter}
                         zoom={7}
                         onClick={this.onMapClicked}
-                        bounds={bounds} >
-                    {
-                        filteredmarkers.map((mark, i) => {
-                            return <Marker onClick={this.onMarkerClick}
-                                key={i}
-                                name={mark.name}
-                                title={mark.title}
-                                position={mark.position}
-                                animation={animation} />
-                        })
-                    }
-                    
+                        bounds={bounds}>
+
+                        {
+                            filteredmarkers.map((mark, i) => {
+
+                                return <Marker onClick={this.onMarkerClick}
+                                    key={i}
+                                    name={mark.name}
+                                    title={mark.title}
+                                    position={mark.position}
+                                    animation={animation}
+                                    icon={{
+                                        url: icons,
+                                        size: { width: 10, height: 10 } // pass your image here
+                                    }}
+                                />
+                            })
+                        }
+
                         <InfoWindow
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>

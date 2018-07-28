@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { markers } from '../markers/markers';
 import { GoogleApiWrapper } from 'google-maps-react';
-import sortBy from 'sort-by';
 
 class Sidebar extends Component {
     placeSearchService = null;
@@ -28,7 +27,7 @@ class Sidebar extends Component {
                 document.querySelector("input[name=filter]").value = "";
             });
         });
-     
+
     }
 
     /**
@@ -47,6 +46,8 @@ class Sidebar extends Component {
             }, (results, status) => {
                 if (status === "OK") {
                     const placeDetails = results[0];
+
+                    console.log(placeDetails);
                     const marker = {
                         id: place.place_id,
                         position: {
@@ -54,7 +55,8 @@ class Sidebar extends Component {
                             lng: placeDetails.geometry.location.lng(),
                         },
                         name: place.description,
-                        title: placeDetails.formatted_address
+                        title: placeDetails.formatted_address,
+                        types: placeDetails.types
                     }
                     _markers.push(marker);
                 }
@@ -75,13 +77,14 @@ class Sidebar extends Component {
                 console.log("Not found!");
                 return;
             }
-            
+
             cb(data);
         });
     }
 
 
     filterList = (event, places) => {
+
         const filterInputEl = document.querySelector("input[name=filter]");
         const filterBy = filterInputEl.value.toLowerCase();
 
@@ -89,8 +92,6 @@ class Sidebar extends Component {
             const targetText = place.title.toLowerCase();
             return targetText.search(filterBy) !== -1;
         });
-
-        
         this.props.updateFilteredMarkers(updatedList);
     }
 
@@ -114,7 +115,7 @@ class Sidebar extends Component {
                 <ul className="place-names">
                     {
                         this.props.filteredmarkers.map((place) => {
-                            return <li key={place.id}>{place.title}</li>
+                            return <li key={place.id}>{place.title}<hr /></li>
                         })
                     }
                 </ul>
