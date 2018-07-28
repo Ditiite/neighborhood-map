@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { markers } from '../markers/markers';
+//import { markers } from '../markers/markers';
 import { GoogleApiWrapper } from 'google-maps-react';
 
 class Sidebar extends Component {
@@ -109,13 +109,13 @@ class Sidebar extends Component {
                     className="input"
                     type="text"
                     name="filter"
-                    placeholder="Bilter By ..."
+                    placeholder="Filter By ..."
                 />
                 <button className="btn" onClick={this.filterList}>Filter</button>
                 <ul className="place-names">
                     {
                         this.props.filteredmarkers.map((place) => {
-                            return <li key={place.id}>{place.title}<hr /></li>
+                            return <li key={place.id}>{place.name}<hr /></li>
                         })
                     }
                 </ul>

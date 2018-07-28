@@ -3,22 +3,8 @@ import React, { Component } from 'react';
 import { markers as defaultMarkers } from '../markers/markers';
 import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
+import { Header } from './Header';    
 
-const stylesL= {
-    content: "",
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    /* Center the tip horizontally. */
-    transform: 'translate(-50 %, 0)',
-    /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
-    width: 0,
-    height: 0,
-    /* The tip is 8px high, and 12px wide. */
-    borderLeft: '6px solid transparent',
-    borderRight: '6px solid transparent',
-    borderTop: /* TIP_HEIGHT= */ '8px solid white'
-}
 
 export class MapContainer extends Component {
     state = {
@@ -29,6 +15,8 @@ export class MapContainer extends Component {
             lat: 56.345706,
             lng: 26.195000
         },
+        show: true,
+        btnText: 'Hide',
         markers: [...defaultMarkers],
         filteredmarkers: [...defaultMarkers]
     };
@@ -44,7 +32,7 @@ export class MapContainer extends Component {
         marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
         setTimeout(() => { 
             marker.setAnimation(null); 
-        }, 550);
+        }, 2000);
     }
 
     onMapClicked = (props) => {
@@ -75,6 +63,21 @@ export class MapContainer extends Component {
         });
     }
 
+    handleShow = () => {
+        this.setState({
+            show: !this.state.show
+        });
+        if(this.state.btnText === 'Hide') {
+            this.setState({
+                btnText: 'Show more'
+            })
+        } else if (this.state.btnText === 'Show more') {
+            this.setState({
+                btnText: 'Hide'
+            })
+        }
+    }
+
     render() {
 
         let bounds = new this.props.google.maps.LatLngBounds();
@@ -92,12 +95,17 @@ export class MapContainer extends Component {
             '|30|_|%E2%80%A2';
         return (
             <React.Fragment>
-                <Sidebar
+                <Header 
+                    btnText={this.state.btnText}
+                    handleShow={this.handleShow}
+                />
+                
+                { this.state.show && <Sidebar
                     markers={this.state.markers}
                     filteredmarkers={this.state.filteredmarkers}
                     updateMarkers={this.updateMarkers}
                     updateFilteredMarkers={this.updateFilteredMarkers}
-                />
+                />}
                 <div className="map">
                     <Map
                         styles={styles}
@@ -110,6 +118,7 @@ export class MapContainer extends Component {
                         {
                             filteredmarkers.map((mark, i) => {
                                 return <Marker 
+                                    style={{textShadow: '2px 2px 20px silver', background: 'red'}}
                                     onClick={this.onMarkerClick}
                                     key={i}
                                     name={mark.name}
@@ -122,7 +131,6 @@ export class MapContainer extends Component {
                         }
         
                         <InfoWindow
-                            style={stylesL}
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>
                             <div className="info-window">
