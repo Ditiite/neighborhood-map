@@ -2,7 +2,7 @@ export const markers = [
     {
         id: "1",
         title: 'Turaidas iela 10, Sigulda, Siguldas pilsēta, LV-2150, Latvia',
-        name: 'Turaidas pils',
+        name: 'Turaidas castle',
         position: { lat: 57.182273, lng: 24.850391 },
         type: 'castle'
     },

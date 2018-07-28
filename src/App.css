@@ -1,16 +1,19 @@
 :root {
 	--text-color: rgb(9, 0, 59);
+	--bg-color:#e7dce9;
+	--pink: rgb(248, 86, 153);
 }
 
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	outline-color: #86598b;
 }
 
 .map {
+	top: 0;
 	bottom:0px;
-	height: 100%;
 	width: 100%;
 	position: absolute;
 	right: 0px;
@@ -21,20 +24,26 @@
 SIDEBAR
 =================*/
 .sidebar {
-	width: 400px;
-	background: #ddcee0;
-	height: 100%;
+	width: 300px;
+	background: var(--bg-color);
+	min-height: 100vh;
 	position: absolute;
 	line-height: 2em;
 	padding: 20px;
 	opacity: 0.9;
 	z-index: 1;
+	padding-top: 100px;
+	box-shadow: 10px 10px 30px #a0a0a0;
 }
 
 .input {
 	border: none;
 	border-bottom: 2px solid var(--text-color);
-	width: 250px;
+	width: 180px;
+	background: transparent;
+	font-size: 1em;
+	padding: 10px;
+	padding-left: 0;
 }
 
 .btn {
@@ -42,7 +51,16 @@ SIDEBAR
 	background: transparent;
 	text-transform: uppercase;
 	cursor: pointer;
-	font-size: 1.5em;
+	padding: 10px;
+	width: 80px;
+	color: var(--text-color);
+	box-sizing: border-box;
+	font-size: 0.9em;
+}
+
+.display-btn:active,
+.btn:active {
+	transform: scale(0.9);
 }
 
 .place-names {
@@ -54,18 +72,71 @@ SIDEBAR
 }
 
 .place-names li {
-	padding: 10px 0;
+	padding: 10px 0 0 0;
 }
 
-input {
-	background: transparent;
-	font-size: 1em;
+.place-names li:hover {
+	color: var(--pink);
 }
 
 /* Infor window */
 .info-window {
-	color: pink;
+	color: rgb(252, 165, 179);
 	font-size: 0.7em;
 	max-width: 200px;
+}
 
+/*==================
+HEADER
+====================*/
+
+.header {
+	padding: 10px;
+	position: absolute;
+	z-index: 2;
+	color: var(--text-color);
+	width: 100%;
+	background: transparent;
+	/* background: var(--bg-color); */
+	/* box-shadow: 10px 10px 30px #d2c6d3; */
+	text-shadow: 10px 10px 10px silver;
+	font-family: 'Kaushan Script', cursive;
+	display: grid;
+	grid-template-areas:  
+		"btn title";
+	grid-template-columns: 200px 1fr;
+	justify-items: center;
+}
+
+.fa-fort-awesome {
+	color: var(--pink);
+	font-size: 2em;
+	margin-right: 20px;
+}
+
+.display-btn {
+	padding: 10px;
+	grid-area: btn;
+	background: transparent;
+	cursor: pointer;
+	text-transform: uppercase;
+	border: none;
+	color: var(--pink);
+	width: 153px;
+	text-shadow:  0 1px 2px rgba(255,255,255,0.7), 
+					 0 7px 4px rgba(0,0,0,0.5);
+}
+
+.header h1 {
+	grid-area: title;
+}
+
+/* Move default Map and sataline bottuns to the right */
+div.gmnoprint {
+	padding-left: 80%;
+}
+
+/* HIde walking */
+div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+	display: none;
 }
