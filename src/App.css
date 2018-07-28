@@ -56,3 +56,16 @@ SIDEBAR
 .place-names li {
 	padding: 10px 0;
 }
+
+input {
+	background: transparent;
+	font-size: 1em;
+}
+
+/* Infor window */
+.info-window {
+	color: pink;
+	font-size: 0.7em;
+	max-width: 200px;
+
+}
