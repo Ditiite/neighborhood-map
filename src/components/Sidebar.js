@@ -41,13 +41,12 @@ class Sidebar extends Component {
         let receivedResults = 0;
 
         places.forEach((place) => {
+            // Google has query limit.
             this.geocoder.geocode({
                 'placeId': place.place_id
             }, (results, status) => {
                 if (status === "OK") {
                     const placeDetails = results[0];
-
-                    console.log(placeDetails);
                     const marker = {
                         id: place.place_id,
                         position: {
@@ -59,6 +58,8 @@ class Sidebar extends Component {
                         types: placeDetails.types
                     }
                     _markers.push(marker);
+                } else {
+                    console.error("Invalid status", status, results);
                 }
 
                 // Increment received
@@ -84,7 +85,6 @@ class Sidebar extends Component {
 
 
     filterList = (event, places) => {
-
         const filterInputEl = document.querySelector("input[name=filter]");
         const filterBy = filterInputEl.value.toLowerCase();
 
@@ -93,6 +93,11 @@ class Sidebar extends Component {
             return targetText.search(filterBy) !== -1;
         });
         this.props.updateFilteredMarkers(updatedList);
+    }
+
+    onClickPlaceListItem = (event) => {
+        const placeTitle = event.target.dataset.placeTitle;
+        this.props.selectMarkerByTitle(placeTitle);
     }
 
     render() {
@@ -115,7 +120,8 @@ class Sidebar extends Component {
                 <ul className="place-names">
                     {
                         this.props.filteredmarkers.map((place) => {
-                            return <li key={place.id}>{place.name}<hr /></li>
+                            return <li key={place.id} data-place-title={place.title} onClick={this.onClickPlaceListItem}>
+                                {place.name}<hr /></li>
                         })
                     }
                 </ul>

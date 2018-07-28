@@ -5,11 +5,14 @@ import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
 import { Header } from './Header';    
 
-
+const helsinki = {
+    "lat": 60.16985569999999,
+    "lng": 24.93837910000002
+};
 export class MapContainer extends Component {
     state = {
         showingInfoWindow: true,
-        activeMarker: {},
+        activeMarker: null,
         selectedPlace: {},
         initialCenter: {
             lat: 56.345706,
@@ -20,6 +23,12 @@ export class MapContainer extends Component {
         markers: [...defaultMarkers],
         filteredmarkers: [...defaultMarkers]
     };
+
+
+    selectMarkerByTitle = (title) => {
+        const markerEl = document.querySelector(`[title='${title}']`);
+        markerEl.click();
+    }
 
     onMarkerClick = (props, marker, e) => {
         this.setState({
@@ -79,7 +88,6 @@ export class MapContainer extends Component {
     }
 
     render() {
-
         let bounds = new this.props.google.maps.LatLngBounds();
         let animation = this.props.google.maps.Animation.DROP;
 
@@ -93,6 +101,19 @@ export class MapContainer extends Component {
         const markerColor = 'cbabce';
         const icons = 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
             '|30|_|%E2%80%A2';
+
+        const markerComponents = filteredmarkers.map((mark, i) => {
+            return <Marker
+                onClick={this.onMarkerClick}
+                key={i}
+                name={mark.name}
+                title={mark.title}
+                position={mark.position}
+                animation={animation}
+                icon={icons}
+            />
+        });
+
         return (
             <React.Fragment>
                 <Header 
@@ -100,17 +121,23 @@ export class MapContainer extends Component {
                     handleShow={this.handleShow}
                 />
                 
-                { this.state.show && <Sidebar
-                    markers={this.state.markers}
-                    filteredmarkers={this.state.filteredmarkers}
-                    updateMarkers={this.updateMarkers}
-                    updateFilteredMarkers={this.updateFilteredMarkers}
-                />}
+                {   this.state.show 
+                    && 
+                    <Sidebar
+                        selectMarkerByTitle={this.selectMarkerByTitle}
+                        showInfoWindow={this.showInfoWindow}
+                        markers={this.state.markers}
+                        filteredmarkers={this.state.filteredmarkers}
+                        updateMarkers={this.updateMarkers}
+                        updateFilteredMarkers={this.updateFilteredMarkers}
+                    />
+                }
                 <div className="map">
                     <Map
                         styles={styles}
                         google={this.props.google}
                         initialCenter={this.state.initialCenter}
+                        center={this.state.activeMarker? this.state.activeMarker.position: {}}
                         zoom={7}
                         onClick={this.onMapClicked}
                         bounds={bounds}>
@@ -118,7 +145,6 @@ export class MapContainer extends Component {
                         {
                             filteredmarkers.map((mark, i) => {
                                 return <Marker 
-                                    style={{textShadow: '2px 2px 20px silver', background: 'red'}}
                                     onClick={this.onMarkerClick}
                                     key={i}
                                     name={mark.name}
