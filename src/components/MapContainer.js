@@ -4,6 +4,22 @@ import { markers as defaultMarkers } from '../markers/markers';
 import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
 
+const stylesL= {
+    content: "",
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    /* Center the tip horizontally. */
+    transform: 'translate(-50 %, 0)',
+    /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+    width: 0,
+    height: 0,
+    /* The tip is 8px high, and 12px wide. */
+    borderLeft: '6px solid transparent',
+    borderRight: '6px solid transparent',
+    borderTop: /* TIP_HEIGHT= */ '8px solid white'
+}
+
 export class MapContainer extends Component {
     state = {
         showingInfoWindow: true,
@@ -17,29 +33,18 @@ export class MapContainer extends Component {
         filteredmarkers: [...defaultMarkers]
     };
 
-    // makeMarkerIcon = () => {
-    //     var markerImage = new google.maps.MarkerImage(
-    //         'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + 'FFFF24' +
-    //         '|40|_|%E2%80%A2',
-    //         new google.maps.Size(21, 34),
-    //         new google.maps.Point(0, 0),
-    //         new google.maps.Point(10, 34),
-    //         new google.maps.Size(21, 34));
-    //     return markerImage;
-    // }
-
     onMarkerClick = (props, marker, e) => {
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
-            showingInfoWindow: true
+            showingInfoWindow: true,
+            initialCenter: marker.position
         });
-        //When click on marker will have bounce animation
-        // if (marker.getAnimation() !== null) {
-        //     marker.setAnimation(null);
-        // } else {
-        //     marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
-        // }
+
+        marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
+        setTimeout(() => { 
+            marker.setAnimation(null); 
+        }, 550);
     }
 
     onMapClicked = (props) => {
@@ -48,7 +53,7 @@ export class MapContainer extends Component {
                 showingInfoWindow: true,
                 activeMarker: null
             })
-        }
+        } 
     };
 
     /**
@@ -81,8 +86,10 @@ export class MapContainer extends Component {
             bounds.extend(marker.position);
         });
 
-        const icons = 'http://www.clker.com/cliparts/W/Y/G/I/L/4/purple-pin.svg';
-        //const icons = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        //customize icon
+        const markerColor = 'cbabce';
+        const icons = 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
+            '|30|_|%E2%80%A2';
         return (
             <React.Fragment>
                 <Sidebar
@@ -102,25 +109,23 @@ export class MapContainer extends Component {
 
                         {
                             filteredmarkers.map((mark, i) => {
-
-                                return <Marker onClick={this.onMarkerClick}
+                                return <Marker 
+                                    onClick={this.onMarkerClick}
                                     key={i}
                                     name={mark.name}
                                     title={mark.title}
                                     position={mark.position}
                                     animation={animation}
-                                    icon={{
-                                        url: icons,
-                                        size: { width: 10, height: 10 } // pass your image here
-                                    }}
+                                    icon={icons}
                                 />
                             })
                         }
-
+        
                         <InfoWindow
+                            style={stylesL}
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>
-                            <div>
+                            <div className="info-window">
                                 <h1>{this.state.selectedPlace.name}</h1>
                                 <p>{this.state.selectedPlace.title}</p>
                             </div>
