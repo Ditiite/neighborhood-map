@@ -24,9 +24,11 @@
 SIDEBAR
 =================*/
 .sidebar {
-	width: 300px;
+	width: 320px;
 	background: var(--bg-color);
 	min-height: 100vh;
+	max-height: 100%;
+	overflow-y: scroll;
 	position: absolute;
 	line-height: 2em;
 	padding: 20px;

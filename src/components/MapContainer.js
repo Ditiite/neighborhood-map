@@ -19,42 +19,35 @@ export class MapContainer extends Component {
         btnText: 'Hide',
         markers: [...defaultMarkers],
         filteredmarkers: [...defaultMarkers],
-        description: '',
-        weatherIcon: '',
-        temp: 0
+        activeMarkerWeather: {
+            description: null,
+            weatherIcon: null,
+            temp: null
+        }
     };
-
-
-    /* GET WEATHER FOR MARKED LOCATIONS */
-
-    componentDidMount = async () => {
-        console.log('Hello');
-        console.log('InitialState', this.state.initialCenter);
-        const api = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.initialCenter.lat}&lon=${this.state.initialCenter.lng}&appid=4081a6920c100a1824eff93069bb26e0`);
-        const data = await api.json();
-        console.log(data);
-         
-        this.setState({
-            description: data.weather[0].description,
-            weatherIcon: data.weather[0].icon,
-            temp: data.main.temp
-        })
-        let iconUrl = `http://openweathermap.org/img/w/${this.state.weatherIcon}.png`;
-        console.log('description', this.state.weatherIcon);
-
-    }
 
     selectMarkerByTitle = (title) => {
         const markerEl = document.querySelector(`[title='${title}']`);
         markerEl.click();
     }
 
-    onMarkerClick = (props, marker, e) => {
+    onMarkerClick = async (props, marker, e) => {
+        const lat = marker.position.lat();
+        const lng = marker.position.lng();
+        const resp = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=4081a6920c100a1824eff93069bb26e0`);
+        const activeMarkerWeather = await resp.json().then((data) => {
+            return {
+                description: data.weather[0].description,
+                weatherIcon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+                temp: (data.main.temp - 273.15).toFixed(1)
+            }
+        });
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
             showingInfoWindow: true,
-            initialCenter: marker.position
+            initialCenter: marker.position,
+            activeMarkerWeather
         });
 
         marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
@@ -63,10 +56,13 @@ export class MapContainer extends Component {
         }, 2000);
     }
 
-    onMapClicked = (props) => {
+    /**
+     * Reset activeMarker, infoWindow when outside the marker is clicked
+     */
+    onMapClicked = (props, b) => {
         if (this.state.showingInfoWindow) {
             this.setState({
-                showingInfoWindow: true,
+                showingInfoWindow: false,
                 activeMarker: null
             })
         } 
@@ -169,9 +165,9 @@ export class MapContainer extends Component {
                             <div className="info-window">
                                 <h1>{this.state.selectedPlace.name}</h1>
                                 <p>{this.state.selectedPlace.title}</p>
-                                <img className="info-img" src={this.state.iconUrl} alt="Weather icon" /> 
-                                <p>{this.state.description}</p>
-                                <p>{(this.state.temp - 273.15).toFixed(1)} °C</p>
+                                <img style={{width:"50px",height: "50px"}} className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" /> 
+                                <p>{this.state.activeMarkerWeather.description}</p>
+                                <p>{this.state.activeMarkerWeather.temp} °C</p>
                             </div>                            
                         </InfoWindow>
                     </Map>
