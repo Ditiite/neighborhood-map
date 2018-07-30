@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { markers as defaultMarkers } from '../markers/markers';
 import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
-import { Header } from './Header';    
+import { Header } from './Header';
+import { getWeather } from '../services/weatherApi';
 
 
 export class MapContainer extends Component {
@@ -19,11 +20,7 @@ export class MapContainer extends Component {
         btnText: 'Hide',
         markers: [...defaultMarkers],
         filteredmarkers: [...defaultMarkers],
-        activeMarkerWeather: {
-            description: null,
-            weatherIcon: null,
-            temp: null
-        }
+        activeMarkerWeather: null
     };
 
     selectMarkerByTitle = (title) => {
@@ -32,16 +29,12 @@ export class MapContainer extends Component {
     }
 
     onMarkerClick = async (props, marker, e) => {
-        const lat = marker.position.lat();
-        const lng = marker.position.lng();
-        const resp = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=4081a6920c100a1824eff93069bb26e0`);
-        const activeMarkerWeather = await resp.json().then((data) => {
-            return {
-                description: data.weather[0].description,
-                weatherIcon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
-                temp: (data.main.temp - 273.15).toFixed(1)
-            }
-        });
+        let activeMarkerWeather = null;
+        try {
+            activeMarkerWeather = await getWeather(marker.position.lat(), marker.position.lng())
+        } catch(err) {
+            console.error("Failed to fetch weather");
+        }
         this.setState({
             selectedPlace: props,
             activeMarker: marker,
@@ -165,9 +158,16 @@ export class MapContainer extends Component {
                             <div className="info-window">
                                 <h1>{this.state.selectedPlace.name}</h1>
                                 <p>{this.state.selectedPlace.title}</p>
-                                <img style={{width:"50px",height: "50px"}} className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" /> 
-                                <p>{this.state.activeMarkerWeather.description}</p>
-                                <p>{this.state.activeMarkerWeather.temp} °C</p>
+                                {
+                                    this.state.activeMarkerWeather
+                                    &&
+                                    <div>
+                                        <img style={{width:"50px",height: "50px"}} className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" /> 
+                                        <p>{this.state.activeMarkerWeather.description}</p>
+                                        <p>{this.state.activeMarkerWeather.temp} °C</p>
+                                    </div>
+                                }
+
                             </div>                            
                         </InfoWindow>
                     </Map>
