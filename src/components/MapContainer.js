@@ -93,16 +93,16 @@ export class MapContainer extends Component {
             this.setState({
                 btnText: 'Hide'
             })
-        } console.log(this.state.activeMarker);
+        }
     }
 
     render() {
-        let bounds = new this.props.google.maps.LatLngBounds();
         let animation = this.props.google.maps.Animation.DROP;
-
+        
         const filteredmarkers = this.state.filteredmarkers;
-
-        filteredmarkers.forEach((marker) => {
+        
+        let bounds = new this.props.google.maps.LatLngBounds();
+        this.state.markers.forEach((marker) => {
             bounds.extend(marker.position);
         });
 
