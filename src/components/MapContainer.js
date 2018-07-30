@@ -5,25 +5,44 @@ import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
 import { Header } from './Header';    
 
-const helsinki = {
-    "lat": 60.16985569999999,
-    "lng": 24.93837910000002
-};
+
 export class MapContainer extends Component {
     state = {
         showingInfoWindow: true,
         activeMarker: null,
         selectedPlace: {},
         initialCenter: {
-            lat: 56.345706,
-            lng: 26.195000
+            lat: 56.949649,
+            lng: 24.105186
         },
         show: true,
         btnText: 'Hide',
         markers: [...defaultMarkers],
-        filteredmarkers: [...defaultMarkers]
+        filteredmarkers: [...defaultMarkers],
+        description: '',
+        weatherIcon: '',
+        temp: 0
     };
 
+
+    /* GET WEATHER FOR MARKED LOCATIONS */
+
+    componentDidMount = async () => {
+        console.log('Hello');
+        console.log('InitialState', this.state.initialCenter);
+        const api = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this.state.initialCenter.lat}&lon=${this.state.initialCenter.lng}&appid=4081a6920c100a1824eff93069bb26e0`);
+        const data = await api.json();
+        console.log(data);
+         
+        this.setState({
+            description: data.weather[0].description,
+            weatherIcon: data.weather[0].icon,
+            temp: data.main.temp
+        })
+        let iconUrl = `http://openweathermap.org/img/w/${this.state.weatherIcon}.png`;
+        console.log('description', this.state.weatherIcon);
+
+    }
 
     selectMarkerByTitle = (title) => {
         const markerEl = document.querySelector(`[title='${title}']`);
@@ -55,7 +74,7 @@ export class MapContainer extends Component {
 
     /**
      * set new markers to our state
-     * refresh the filter list with mainone
+     * refresh the filter list with main one
      * @param {Object} marker 
      */
     updateMarkers = (markers) => {
@@ -72,6 +91,7 @@ export class MapContainer extends Component {
         });
     }
 
+    /* TOOGLE THE BUTTON TO SHOW OR HIDE SIDEBAR */
     handleShow = () => {
         this.setState({
             show: !this.state.show
@@ -84,7 +104,7 @@ export class MapContainer extends Component {
             this.setState({
                 btnText: 'Hide'
             })
-        }
+        } console.log(this.state.activeMarker);
     }
 
     render() {
@@ -101,26 +121,13 @@ export class MapContainer extends Component {
         const markerColor = 'cbabce';
         const icons = 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
             '|30|_|%E2%80%A2';
-
-        const markerComponents = filteredmarkers.map((mark, i) => {
-            return <Marker
-                onClick={this.onMarkerClick}
-                key={i}
-                name={mark.name}
-                title={mark.title}
-                position={mark.position}
-                animation={animation}
-                icon={icons}
-            />
-        });
-
+            console.log
         return (
             <React.Fragment>
-                <Header 
+                <Header
                     btnText={this.state.btnText}
                     handleShow={this.handleShow}
                 />
-                
                 {   this.state.show 
                     && 
                     <Sidebar
@@ -144,7 +151,7 @@ export class MapContainer extends Component {
 
                         {
                             filteredmarkers.map((mark, i) => {
-                                return <Marker 
+                                return <Marker
                                     onClick={this.onMarkerClick}
                                     key={i}
                                     name={mark.name}
@@ -156,13 +163,16 @@ export class MapContainer extends Component {
                             })
                         }
         
-                        <InfoWindow
+                        <InfoWindow 
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>
                             <div className="info-window">
                                 <h1>{this.state.selectedPlace.name}</h1>
                                 <p>{this.state.selectedPlace.title}</p>
-                            </div>
+                                <img className="info-img" src={this.state.iconUrl} alt="Weather icon" /> 
+                                <p>{this.state.description}</p>
+                                <p>{(this.state.temp - 273.15).toFixed(1)} °C</p>
+                            </div>                            
                         </InfoWindow>
                     </Map>
                 </div>

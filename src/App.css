@@ -86,16 +86,23 @@ SIDEBAR
 	max-width: 200px;
 }
 
+/* Image for info window */
+.info-img {
+	height: 150px;
+	width: 100px;
+	border: 1px solid rgb(173, 173, 173);
+}
+
 /*==================
 HEADER
 ====================*/
 
 .header {
+	margin-left: 50px;
 	padding: 10px;
 	position: absolute;
 	z-index: 2;
 	color: var(--text-color);
-	width: 100%;
 	background: transparent;
 	/* background: var(--bg-color); */
 	/* box-shadow: 10px 10px 30px #d2c6d3; */
@@ -129,14 +136,11 @@ HEADER
 
 .header h1 {
 	grid-area: title;
+	padding-left: 50px;
 }
 
 /* Move default Map and sataline bottuns to the right */
-div.gmnoprint {
-	padding-left: 80%;
-}
 
-/* HIde walking */
-div.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
-	display: none;
+div.gmnoprint:last-of-type {
+	float: right;
 }
