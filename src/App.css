@@ -187,7 +187,8 @@ INFO WINDOW
 	display: grid;
 	grid-template-areas:  
 		"img des"
-		"img deg";
+		"img deg"
+		"title logo";
 }
 
 /* Image for info window */
@@ -206,5 +207,20 @@ INFO WINDOW
 .info-temp {
 	grid-area: deg;
 	font-size: 1em;
+}
 
+/* Open weather map logo */
+.weather-logo {
+	grid-area: logo;
+	width: 20px;
+	height: 20px;
+}
+
+.weather-title{
+	grid-area: title;
+	line-height: 8px;
+}
+
+.weather-title p{
+	font-size: 0.7em;
 }

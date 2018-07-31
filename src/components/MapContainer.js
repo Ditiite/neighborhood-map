@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
 import { Header } from './Header';
 import { getWeather } from '../services/weatherApi';
+import weaterLogo from '../images/openweathermap.png'
 
 export class MapContainer extends Component {
     state = {
@@ -164,6 +165,11 @@ export class MapContainer extends Component {
                                         <img className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" />
                                         <p className="info-desc">{this.state.activeMarkerWeather.description}</p>
                                         <p className="info-temp">{this.state.activeMarkerWeather.temp} °C</p>
+                                        <img className="weather-logo" src={weaterLogo} alt="Open map weather logo" />
+                                        <div className="weather-title">
+                                            <p>Weather provided by:</p><br />
+                                            <p>OpenWeatherMap</p>
+                                        </div>
                                     </div>
                                 }
 
