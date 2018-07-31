@@ -102,30 +102,18 @@ export const markers = [
         type: 'castle'
     }, {
         id: '17',
-        title: 'Pils laukums 3, Riga 1050, Latvia',
-        name: 'Riga Castle',
-        position: { lat: 56.950869, lng: 24.102382 },
-        type: 'castle'
-    }, {
-        id: '18',
         title: 'Rigas iela 216b, Jekabpils 5202, Latvia',
         name: 'Krustpils castle',
         position: { lat: 56.511295, lng: 25.859054 },
         type: 'castle'
     }, {
-        id: '19',
+        id: '18',
         title: 'Pils St. 6, Kraslava 5601, Latvia',
         name: 'Castle of Earls Platery',
         position: { lat: 55.899568, lng: 27.159682 },
         type: 'castle'
     }, {
-        id: '20',
-        title: 'Parka iela 3, Lielvarde, Latvia',
-        name: 'Uldevena Castle',
-        position: { lat: 56.719582, lng: 24.800562 },
-        type: 'castle'
-    }, {
-        id: '21',
+        id: '19',
         title: 'Baldone, Latvia',
         name: 'Baldone White Castle',
         position: { lat: 56.745838, lng: 24.406107 },

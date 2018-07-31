@@ -114,7 +114,7 @@ class Sidebar extends Component {
                     className="input"
                     type="text"
                     name="filter"
-                    placeholder="Filter By ..."
+                    placeholder="Filter By Name ..."
                 />
                 <button className="btn" onClick={this.filterList}>Filter</button>
                 <ul className="place-names">

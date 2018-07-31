@@ -1,5 +1,5 @@
 :root {
-	--text-color: rsgb(40, 29, 100);;
+	--text-color: rgb(40, 29, 100);
 	--bg-color:#e7dce9;
 	--pink: rgb(248, 86, 153);
 }
@@ -42,7 +42,6 @@ SIDEBAR
 .input {
 	border: none;
 	border-bottom: 2px solid var(--text-color);
-	width: 180px;
 	background: transparent;
 	font-size: 1em;
 	padding: 10px;
@@ -150,12 +149,6 @@ HEADER
 	align-self: center;
 }
 
-/* Move default Map and sataline bottuns to the right */
-
-div.gmnoprint:last-of-type {
-	float: right;
-}
-
 /*================
 INFO WINDOW
 ================*/
@@ -223,4 +216,29 @@ INFO WINDOW
 
 .weather-title p{
 	font-size: 0.7em;
+}
+
+@media screen and (max-width: 450px) {
+	.sidebar {
+		width: 200px;
+		overflow-x: hidden;
+	}
+
+	.header {
+		grid-template-areas:  
+		"title"
+		"btn ";
+	}
+
+	.header h1 {
+		font-size: 1.2em;
+	}
+
+	.display-btn {
+		font-size: 0.7em;
+	}
+
+	.btn {
+		padding-left: 0;
+	}
 }
