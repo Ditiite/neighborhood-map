@@ -1,5 +1,5 @@
 :root {
-	--text-color: rgb(9, 0, 59);
+	--text-color: rsgb(40, 29, 100);;
 	--bg-color:#e7dce9;
 	--pink: rgb(248, 86, 153);
 }
@@ -9,10 +9,11 @@
 	padding: 0;
 	box-sizing: border-box;
 	outline-color: #86598b;
+	font-size: 16px;
 }
 
 .map {
-	top: 0;
+	top: 72px;
 	bottom:0px;
 	width: 100%;
 	position: absolute;
@@ -54,7 +55,7 @@ SIDEBAR
 	text-transform: uppercase;
 	cursor: pointer;
 	padding: 10px;
-	width: 80px;
+	width: auto;
 	color: var(--text-color);
 	box-sizing: border-box;
 	font-size: 0.9em;
@@ -81,22 +82,6 @@ SIDEBAR
 	color: var(--pink);
 }
 
-/* Infor window */
-.info-window {
-	color: rgb(252, 165, 179);
-	font-size: 0.7em;
-	max-width: 200px;
-}
-
-/* Image for info window */
-.info-img {
-	height: 150px;
-	width: 100px;
-	border: 1px solid rgb(173, 173, 173);
-}
-
-
-=======
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 10px;
@@ -122,20 +107,20 @@ SIDEBAR
 HEADER
 ====================*/
 .header {
-	margin-left: 50px;
+	width: 100%;
 	padding: 10px;
 	position: absolute;
 	z-index: 2;
 	color: var(--text-color);
-	background: transparent;
-	/* background: var(--bg-color); */
-	/* box-shadow: 10px 10px 30px #d2c6d3; */
+	/* background: transparent; */
+	background: var(--bg-color);
+	box-shadow: 10px 10px 30px #d2c6d3;
 	text-shadow: 10px 10px 10px silver;
 	font-family: 'Kaushan Script', cursive;
 	display: grid;
 	grid-template-areas:  
 		"btn title";
-	grid-template-columns: 200px 1fr;
+	grid-template-columns: 320px 1fr;
 	justify-items: center;
 }
 
@@ -153,18 +138,73 @@ HEADER
 	text-transform: uppercase;
 	border: none;
 	color: var(--pink);
-	width: 153px;
 	text-shadow:  0 1px 2px rgba(255,255,255,0.7), 
 					 0 7px 4px rgba(0,0,0,0.5);
 }
 
 .header h1 {
+	color: var(--text-color);
+	font-size: 2em;
 	grid-area: title;
-	padding-left: 65px;
+	text-align: center;
+	align-self: center;
 }
 
 /* Move default Map and sataline bottuns to the right */
 
 div.gmnoprint:last-of-type {
 	float: right;
+}
+
+/*================
+INFO WINDOW
+================*/
+/* Info window */
+.info-window {
+	display: grid;
+	grid-template-areas:  
+		"title title"
+		"address address"
+		"weather weather";
+	grid-gap: 10px;
+	color: rgb(252, 165, 179);
+	font-size: 0.7em;
+	max-width: 200px;
+}
+
+.info-window h1 {
+	grid-area: title;
+	color: rgb(155, 100, 109);
+	font-size: 1.7em;
+}
+
+.address {
+	grid-area: address;
+}
+
+.weather {
+	grid-area: weather;
+	display: grid;
+	grid-template-areas:  
+		"img des"
+		"img deg";
+}
+
+/* Image for info window */
+.info-img {
+	grid-area: img;
+	height: 60px;
+	width: 60px;
+	justify-self: center;
+}
+
+.info-desc {
+	grid-area: des;
+	font-size: 1em;
+}
+
+.info-temp {
+	grid-area: deg;
+	font-size: 1em;
+
 }

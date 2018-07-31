@@ -51,7 +51,7 @@ export class MapContainer extends Component {
     /**
      * Reset activeMarker, infoWindow when outside the marker is clicked
      */
-    onMapClicked = (props, b) => {
+    onMapClicked = () => {
         if (this.state.showingInfoWindow) {
             this.setState({
                 showingInfoWindow: false,
@@ -156,14 +156,14 @@ export class MapContainer extends Component {
                             visible={this.state.showingInfoWindow}>
                             <div className="info-window">
                                 <h1>{this.state.selectedPlace.name}</h1>
-                                <p>{this.state.selectedPlace.title}</p>
+                                <p className="address">{this.state.selectedPlace.title}</p>
                                 {
                                     this.state.activeMarkerWeather
                                     &&
-                                    <div>
-                                        <img style={{ width: "50px", height: "50px" }} className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" />
-                                        <p>{this.state.activeMarkerWeather.description}</p>
-                                        <p>{this.state.activeMarkerWeather.temp} °C</p>
+                                    <div className="weather">
+                                        <img className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" />
+                                        <p className="info-desc">{this.state.activeMarkerWeather.description}</p>
+                                        <p className="info-temp">{this.state.activeMarkerWeather.temp} °C</p>
                                     </div>
                                 }
 
