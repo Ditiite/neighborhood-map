@@ -5,7 +5,8 @@ import Sidebar from './Sidebar';
 import { styles } from './MapContainer.styles';
 import { Header } from './Header';
 import { getWeather } from '../services/weatherApi';
-import weaterLogo from '../images/openweathermap.png'
+import weaterLogo from '../images/openweathermap.png';
+import PropTypes from 'prop-types';
 
 export class MapContainer extends Component {
     state = {
@@ -98,6 +99,9 @@ export class MapContainer extends Component {
     }
 
     render() {
+
+        console.log('helllo', typeof new this.props.google.maps.LatLngBounds());
+
         let animation = this.props.google.maps.Animation.DROP;
 
         const filteredmarkers = this.state.filteredmarkers;
@@ -181,6 +185,11 @@ export class MapContainer extends Component {
             </React.Fragment>
         );
     }
+}
+
+MapContainer.propTypes = {
+    google: PropTypes.object,
+    LatLngBounds: PropTypes.func,
 }
 
 export default GoogleApiWrapper({

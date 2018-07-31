@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const Header = (props) => {
     return (
@@ -8,4 +9,9 @@ export const Header = (props) => {
                 <i className="fab fa-fort-awesome"></i>{props.btnText}</button>
         </header>
     );
+}
+
+Header.propTypes = {
+    handleShow: PropTypes.func,
+    btnText: PropTypes.string
 }

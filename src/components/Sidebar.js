@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//import { markers } from '../markers/markers';
 import { GoogleApiWrapper } from 'google-maps-react';
+import PropTypes from 'prop-types';
 
 class Sidebar extends Component {
     placeSearchService = null;
@@ -13,7 +13,7 @@ class Sidebar extends Component {
             return;
         }
 
-        this.placeSearchService = new this.props.google.maps.places.AutocompleteService();
+        //this.placeSearchService = new this.props.google.maps.places.AutocompleteService();
         this.geocoder = new this.props.google.maps.Geocoder();
     }
 
@@ -157,6 +157,14 @@ class Sidebar extends Component {
             </aside>
         );
     }
+}
+
+Sidebar.propTypes = {
+    Geocoder: PropTypes.func,
+    updateMarkers: PropTypes.func,
+    markers: PropTypes.array,
+    filteredmarkers: PropTypes.array,
+    selectMarkerByTitle: PropTypes.func
 }
 
 export default GoogleApiWrapper({
