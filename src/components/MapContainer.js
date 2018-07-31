@@ -25,6 +25,7 @@ export class MapContainer extends Component {
 
     selectMarkerByTitle = (title) => {
         const markerEl = document.querySelector(`[title='${title}']`);
+        markerEl.focus();
         markerEl.click();
     }
 
@@ -155,9 +156,9 @@ export class MapContainer extends Component {
                         <InfoWindow
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>
-                            <div className="info-window">
-                                <h1>{this.state.selectedPlace.name}</h1>
-                                <p className="address">{this.state.selectedPlace.title}</p>
+                            <div className="info-window" tabIndex="-1">
+                                <h1 tabIndex="0">{this.state.selectedPlace.name}</h1>
+                                <p tabIndex="0" className="address">{this.state.selectedPlace.title}</p>
                                 {
                                     this.state.activeMarkerWeather
                                     &&
