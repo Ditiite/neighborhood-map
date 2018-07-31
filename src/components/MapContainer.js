@@ -111,7 +111,7 @@ export class MapContainer extends Component {
         const markerColor = 'cbabce';
         const icons = 'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
             '|30|_|%E2%80%A2';
-        console.log
+
         return (
             <React.Fragment>
                 <Header
@@ -157,8 +157,8 @@ export class MapContainer extends Component {
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>
                             <div className="info-window" tabIndex="-1">
-                                <h1 tabIndex="0">{this.state.selectedPlace.name}</h1>
-                                <p tabIndex="0" className="address">{this.state.selectedPlace.title}</p>
+                                <h1>{this.state.selectedPlace.name}</h1>
+                                <p className="address">{this.state.selectedPlace.title}</p>
                                 {
                                     this.state.activeMarkerWeather
                                     &&
