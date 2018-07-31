@@ -120,7 +120,7 @@ class Sidebar extends Component {
                 <ul className="place-names">
                     {
                         this.props.filteredmarkers.map((place) => {
-                            return <li key={place.id} data-place-title={place.title} onClick={this.onClickPlaceListItem}>
+                            return <li tabindex="0" key={place.id} data-place-title={place.title} onClick={this.onClickPlaceListItem}>
                                 {place.name}<hr /></li>
                         })
                     }
