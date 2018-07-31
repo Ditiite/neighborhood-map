@@ -4,7 +4,7 @@ The main goal is to use any map providing API plus one more third-party API.
 Should display by our choice our best neighborhood and best destinations. For this project have chouse to display beautiful castles in Latvia.
 
 ## How to run in development mode
-* for the project
+* fork the project
 * run ```npm install```
 #### (ToDoo: add following lines after passing the submition and replace my key with placeholder API_KEY:
 * Please provide your own Google Map API.
