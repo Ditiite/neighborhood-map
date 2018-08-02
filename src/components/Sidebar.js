@@ -13,7 +13,7 @@ class Sidebar extends Component {
             return;
         }
 
-        //this.placeSearchService = new this.props.google.maps.places.AutocompleteService();
+        this.placeSearchService = new this.props.google.maps.places.AutocompleteService();
         this.geocoder = new this.props.google.maps.Geocoder();
     }
 
