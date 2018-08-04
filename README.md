@@ -11,7 +11,7 @@ Should display by our choice our best neighborhood and best destinations. For th
     * You can do it by following this link [Google Map API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
     * To get open weather API please follow this link [OpenWeatherMap](https://openweathermap.org/api)
     * Once you got your keys please place them in places markerd as API)
-* To run aplication in localhost, in comant line type: ``` npm start```
+* To run aplication in localhost, in command line type: ``` npm start```
 * open **localhost:3000**
 
 <!--
