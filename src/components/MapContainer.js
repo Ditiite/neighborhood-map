@@ -99,9 +99,6 @@ export class MapContainer extends Component {
     }
 
     render() {
-
-        console.log('helllo', typeof new this.props.google.maps.LatLngBounds());
-
         let animation = this.props.google.maps.Animation.DROP;
 
         const filteredmarkers = this.state.filteredmarkers;
@@ -135,6 +132,8 @@ export class MapContainer extends Component {
                 }
                 <div className="map">
                     <Map
+                        aria-label="location" 
+                        role="application"
                         styles={styles}
                         google={this.props.google}
                         initialCenter={this.state.initialCenter}
@@ -146,6 +145,7 @@ export class MapContainer extends Component {
                         {
                             filteredmarkers.map((mark, i) => {
                                 return <Marker
+                                    aria-label="Marker of location"
                                     onClick={this.onMarkerClick}
                                     key={i}
                                     name={mark.name}
@@ -158,10 +158,11 @@ export class MapContainer extends Component {
                         }
 
                         <InfoWindow
+                            aria-label="Info about location"
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}>
                             <div className="info-window" tabIndex="-1">
-                                <h1>{this.state.selectedPlace.name}</h1>
+                                <h2>{this.state.selectedPlace.name}</h2>
                                 <p className="address">{this.state.selectedPlace.title}</p>
                                 {
                                     this.state.activeMarkerWeather

@@ -140,7 +140,7 @@ class Sidebar extends Component {
                     id="search"
                     placeholder="Search For ..."
                 />
-                <button ariaLabel="Search for location" className="btn" onClick={this.search}>Search</button>
+                <button aria-label="Search for location" className="btn" onClick={this.search}>Search</button>
                 <input
                     aria-label="Filter location from given ones"
                     aria-required="true"
@@ -151,7 +151,7 @@ class Sidebar extends Component {
                     id="filter"
                     placeholder="Filter By Name ..."
                 />
-                <button ariaLabel="Filter location by name" className="btn" onClick={this.filterList}>Filter</button>
+                <button aria-label="Filter location by name" className="btn" onClick={this.filterList}>Filter</button>
                 <ul className="place-names">
                     {
                         this.props.filteredmarkers.map((place) => {

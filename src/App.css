@@ -166,7 +166,7 @@ INFO WINDOW
 	max-width: 200px;
 }
 
-.info-window h1 {
+.info-window h2 {
 	grid-area: title;
 	color: rgb(155, 100, 109);
 	font-size: 1.7em;
