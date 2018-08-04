@@ -131,21 +131,27 @@ class Sidebar extends Component {
         return (
             <aside className="sidebar">
                 <input
+                    aria-label="Search for location"
+                    aria-required="true"
                     onKeyPress={this.handleKeyPressSearch}
                     className="input"
                     type="text"
                     name="search"
+                    id="search"
                     placeholder="Search For ..."
                 />
-                <button className="btn" onClick={this.search}>Search</button>
+                <button ariaLabel="Search for location" className="btn" onClick={this.search}>Search</button>
                 <input
+                    aria-label="Filter location from given ones"
+                    aria-required="true"
                     onKeyPress={this.onKeyPressHandleFilter}
                     className="input"
                     type="text"
                     name="filter"
+                    id="filter"
                     placeholder="Filter By Name ..."
                 />
-                <button className="btn" onClick={this.filterList}>Filter</button>
+                <button ariaLabel="Filter location by name" className="btn" onClick={this.filterList}>Filter</button>
                 <ul className="place-names">
                     {
                         this.props.filteredmarkers.map((place) => {
