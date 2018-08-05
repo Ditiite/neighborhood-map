@@ -22,7 +22,8 @@ export class MapContainer extends Component {
         btnText: 'Hide',
         markers: [...defaultMarkers],
         filteredmarkers: [...defaultMarkers],
-        activeMarkerWeather: null
+        activeMarkerWeather: null,
+        errMsg: null
     };
 
     selectMarkerByTitle = (title) => {
@@ -34,6 +35,7 @@ export class MapContainer extends Component {
     onMarkerClick = async (props, marker, e, err) => {
         let weatherErrMsg = '';
         let activeMarkerWeather = null;
+
         try {
             activeMarkerWeather = await getWeather(marker.position.lat(), marker.position.lng())
         } catch (err) {
@@ -55,6 +57,19 @@ export class MapContainer extends Component {
         }, 2000);
     }
 
+    /**
+     * Show user error
+     */
+    alertError = (errMsg) => {
+        this.setState({
+            errMsg: errMsg
+        });
+        setTimeout(() => {
+            this.setState({
+                errMsg: ''
+            });
+        }, 7000);
+    }
     /**
      * Reset activeMarker, infoWindow when outside the marker is clicked
      */
@@ -123,15 +138,34 @@ export class MapContainer extends Component {
                     btnText={this.state.btnText}
                     handleShow={this.handleShow}
                 />
+
+                {this.state.errMsg &&
+                    <div style={{
+                        position: "fixed",
+                        top: 0,
+                        right: 0,
+                        backgroundColor: "#ddd",
+                        color: "red",
+                        zIndex: 2000,
+                        padding: "10px 15px",
+                        width: "500px"
+                    }}   
+                    className="alert alert-error"
+                    >
+                        { this.state.errMsg }
+                    </div>
+                }
                 {this.state.show
                     &&
                     <Sidebar
+                        google={this.props.google}
                         selectMarkerByTitle={this.selectMarkerByTitle}
                         showInfoWindow={this.showInfoWindow}
                         markers={this.state.markers}
                         filteredmarkers={this.state.filteredmarkers}
                         updateMarkers={this.updateMarkers}
                         updateFilteredMarkers={this.updateFilteredMarkers}
+                        alertError={this.alertError}
                     />
                 }
                 <div className="map">

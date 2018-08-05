@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { GoogleApiWrapper } from 'google-maps-react';
 import PropTypes from 'prop-types';
 
-class Sidebar extends Component {
+export default class Sidebar extends Component {
+    state = {
+        searchBy: false,
+        searchErrMsg: ''
+    }
     placeSearchService = null;
     geocoder = null;
 
     componentDidMount() {
-        const status = this.props.google.maps.places.PlacesServiceStatus.OK;
+        const status =  this.props.google.maps.places.PlacesServiceStatus.OK;
         if (!status) {
-            alert("Google not ready!");
+            this.props.alertError("Place search is not ready!");
             return;
         }
 
@@ -30,14 +33,23 @@ class Sidebar extends Component {
 
         /* If search field is empty show alert */
         if (!searchBy) {
-            alert('Please propvide search paramiters')
+            this.props.alertError("Please provide search parameter");
             return;
         }
-
         this.getPlaces(searchBy, (places) => {
-            this.createMarkers(places, (receivedMarkers) => {
-                this.props.updateMarkers(receivedMarkers);
+            this.createMarkers(places, (receivedMarkers, errorCount) => {
                 document.querySelector("input[name=filter]").value = "";
+                const receivedAmount = receivedMarkers.length;
+
+                if (receivedAmount === 0) {
+                    // We didn't get any results
+                    this.props.alertError('Error fetching places!')
+                } else if (receivedAmount  < places.length) {
+                    // We got few results
+                    this.props.alertError('Some places were omitted due to error!')
+                }
+                // We display our received results
+                this.props.updateMarkers(receivedMarkers);
             });
         });
 
@@ -89,7 +101,8 @@ class Sidebar extends Component {
     getPlaces(searchBy, cb) {
         this.placeSearchService.getPlacePredictions({ input: searchBy }, (data, status) => {
             if (status !== "OK") {
-                console.log("Not found!");
+                this.props.alertError(`${searchBy} not found! Please try another search!`, 'error');
+                console.log(`getPlacesApi: ${searchBy} Not found!`);
                 return;
             }
 
@@ -105,7 +118,7 @@ class Sidebar extends Component {
 
         /* If filter field is empty show alert */
         if (!filterBy) {
-            alert('Please propvide filter paramiters')
+            this.props.alertError('Please provide filter parameter')
             return;
         }
 
@@ -127,6 +140,7 @@ class Sidebar extends Component {
         this.props.selectMarkerByTitle(placeTitle);
     }
 
+    
     render() {
         return (
             <aside className="sidebar">
@@ -139,6 +153,7 @@ class Sidebar extends Component {
                     name="search"
                     id="search"
                     placeholder="Search For ..."
+                    required
                 />
                 <button aria-label="Search for location" className="btn" onClick={this.search}>Search</button>
                 <input
@@ -152,8 +167,11 @@ class Sidebar extends Component {
                     placeholder="Filter By Name ..."
                 />
                 <button aria-label="Filter location by name" className="btn" onClick={this.filterList}>Filter</button>
+                
                 <ul className="place-names">
-                    {
+                { this.state.searchBy ?
+                    <span>{this.state.searchErrMsg}</span>:
+                      
                         this.props.filteredmarkers.map((place) => {
                             return <li tabIndex="0" key={place.id} data-place-title={place.title} onClick={this.onClickPlaceListItem} onKeyPress={this.onClickPlaceListItem}>
                                 {place.name}<hr /></li>
@@ -172,7 +190,3 @@ Sidebar.propTypes = {
     filteredmarkers: PropTypes.array,
     selectMarkerByTitle: PropTypes.func
 }
-
-export default GoogleApiWrapper({
-    apiKey: 'AIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE'
-})(Sidebar)
