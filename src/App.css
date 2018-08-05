@@ -12,6 +12,9 @@
 	font-size: 16px;
 }
 
+body {
+	font-family: sans-serif;
+}
 .map {
 	top: 72px;
 	bottom:0px;
@@ -37,6 +40,7 @@ SIDEBAR
 	z-index: 1;
 	padding-top: 100px;
 	box-shadow: 10px 10px 30px #a0a0a0;
+	transition: all ease-in-out 2s;
 }
 
 .input {
@@ -217,6 +221,27 @@ INFO WINDOW
 
 .weather-title p{
 	font-size: 0.7em;
+}
+
+/*====================
+ERROR MSG 
+====================*/
+.alert-error, alert{
+	color: rgb(255, 0, 0);
+	position: absolute;
+	top: 80px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: rgb(252, 248, 248);
+	z-index: 2000;
+	padding: 10px 15px;
+	padding: 50px;
+	box-shadow: 10px 10px 20px #86598b;
+	border-radius: 5px;
+	 -webkit-transition: background-color 2s ease-out;
+  -moz-transition: background-color 2s ease-out;
+  -o-transition: background-color 2s ease-out;
+  transition: background-color 2s ease-out;
 }
 
 @media screen and (max-width: 450px) {

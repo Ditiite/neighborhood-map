@@ -139,23 +139,14 @@ export class MapContainer extends Component {
                     handleShow={this.handleShow}
                 />
 
-                {this.state.errMsg &&
-                    <div style={{
-                        position: "fixed",
-                        top: 0,
-                        right: 0,
-                        backgroundColor: "#ddd",
-                        color: "red",
-                        zIndex: 2000,
-                        padding: "10px 15px",
-                        width: "500px"
-                    }}   
-                    className="alert alert-error"
-                    >
-                        { this.state.errMsg }
-                    </div>
+                {
+                    this.state.errMsg &&
+                        <div className="alert alert-error">
+                            { this.state.errMsg }
+                        </div>
                 }
-                {this.state.show
+                {
+                    this.state.show
                     &&
                     <Sidebar
                         google={this.props.google}
