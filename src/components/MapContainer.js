@@ -7,6 +7,7 @@ import { Header } from './Header';
 import { getWeather } from '../services/weatherApi';
 import weaterLogo from '../images/openweathermap.png';
 import PropTypes from 'prop-types';
+import { Weather } from './Weather';
 
 export class MapContainer extends Component {
     state = {
@@ -30,11 +31,13 @@ export class MapContainer extends Component {
         markerEl.click();
     }
 
-    onMarkerClick = async (props, marker, e) => {
+    onMarkerClick = async (props, marker, e, err) => {
+        let weatherErrMsg = '';
         let activeMarkerWeather = null;
         try {
             activeMarkerWeather = await getWeather(marker.position.lat(), marker.position.lng())
         } catch (err) {
+            weatherErrMsg = "Sorry, can't get weather data from openWeatherAPI.";
             console.error("Failed to fetch weather");
         }
         this.setState({
@@ -42,7 +45,8 @@ export class MapContainer extends Component {
             activeMarker: marker,
             showingInfoWindow: true,
             initialCenter: marker.position,
-            activeMarkerWeather
+            activeMarkerWeather,
+            weatherErrMsg
         });
 
         marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
@@ -165,17 +169,16 @@ export class MapContainer extends Component {
                                 <h2>{this.state.selectedPlace.name}</h2>
                                 <p className="address">{this.state.selectedPlace.title}</p>
                                 {
-                                    this.state.activeMarkerWeather
-                                    &&
-                                    <div className="weather">
-                                        <img className="info-img" src={this.state.activeMarkerWeather.weatherIcon} alt="Weather icon" />
-                                        <p className="info-desc">{this.state.activeMarkerWeather.description}</p>
-                                        <p className="info-temp">{this.state.activeMarkerWeather.temp} °C</p>
-                                        <img className="weather-logo" src={weaterLogo} alt="Open map weather logo" />
-                                        <div className="weather-title">
-                                            <p>Weather provided by:</p><br />
-                                            <p>OpenWeatherMap</p>
-                                        </div>
+                                    this.state.activeMarkerWeather ?
+                                    <Weather 
+                                        src={this.state.activeMarkerWeather.weatherIcon}  
+                                        description={this.state.activeMarkerWeather.description}
+                                        temp={this.state.activeMarkerWeather.temp}
+                                        imgSrc={weaterLogo}
+                                    />
+                                    :
+                                    <div>
+                                        { this.state.weatherErrMsg }
                                     </div>
                                 }
 
