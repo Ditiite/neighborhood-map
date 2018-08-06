@@ -238,10 +238,92 @@ ERROR MSG
 	padding: 50px;
 	box-shadow: 10px 10px 20px #86598b;
 	border-radius: 5px;
-	 -webkit-transition: background-color 2s ease-out;
-  -moz-transition: background-color 2s ease-out;
-  -o-transition: background-color 2s ease-out;
-  transition: background-color 2s ease-out;
+}
+
+
+/*=====================
+LOADER when loading map
+=======================*/
+.loader {
+	margin: 0 auto 50px;
+	position: relative;
+	border: 10px solid var(--text-color);
+	border-radius: 50%;
+	border-top: 10px dotted var(--pink);
+	width: 70px;
+	height: 70px;
+	z-index: 1001;
+	-webkit-anomation: spin 2s linear infinite;
+	animation: spin 2s linear infinite;
+}
+
+.loader-abs {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border: 10px solid var(--text-color);
+	border-radius: 50%;
+	border-top: 10px dotted var(--pink);
+	width: 30px;
+	height: 30px;
+	-webkit-anomation: spin2 2s linear infinite;
+	animation: spin2 1s linear infinite;
+}
+
+
+@-webkit-keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(-360deg); }
+}
+
+@keyframes spin2 {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(-360deg); }
+}
+
+/*================================= 
+Error message from Google API error
+==================================*/
+.overlay {
+	width: 100vw;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(50, 50, 50, 0.6);
+	z-index: 1000;
+}
+
+.error-msg-field {
+	min-height: 400px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1001;
+}
+
+.error-msg {
+	position: relative;
+	padding: 20px;
+	background: #e6dee7;
+	box-shadow: 10px 10px 20px #69566b;
+	border-radius: 5px;
+	text-align: center;
+	line-height: 30px;
+	z-index: 1003;
 }
 
 @media screen and (max-width: 450px) {

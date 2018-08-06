@@ -1,4 +1,4 @@
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, InfoWindow, Marker } from 'google-maps-react';
 import React, { Component } from 'react';
 import { markers as defaultMarkers } from '../markers/markers';
 import Sidebar from './Sidebar';
@@ -222,12 +222,6 @@ MapContainer.propTypes = {
     google: PropTypes.object,
     LatLngBounds: PropTypes.func,
 }
-/* 
-export default GoogleApiWrapper({
-    apiKey: 'xAIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE'
-})(MapContainer)
-
- */
 
 export default class ApiWrapper extends Component {
     constructor(props) {
@@ -259,7 +253,7 @@ export default class ApiWrapper extends Component {
         // Load google api 
         const scriptEl = document.createElement('script');
         scriptEl.async = true;
-        scriptEl.src = "https://maps.googleapis.com/maps/api/js?key=xAIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE&callback=googleSuccess&libraries=places&v=3&language=en"
+        scriptEl.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE&callback=googleSuccess&libraries=places&v=3&language=en"
         scriptEl.onerror = () => {
             console.log("Error loading script");
             this.setState({
@@ -273,36 +267,28 @@ export default class ApiWrapper extends Component {
     render() {
         return (
             <React.Fragment>
-                <div className="overlay" style={{
-                    display: (this.state.loading || this.state.error)? 'block': 'none',
-                    width: "100vw",
-                    height: "100%",
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    backgroundColor: "rgba(50, 50, 50, 0.6)",
-                    zIndex: 1000
-                }} />
+                {
+                    (this.state.loading || this.state.error) ?
+                
+                    <div className="overlay">
+                    
+                    </div> : ''
+                }
+                <div className="error-msg-field" 
+                    style={{
+                        display: (this.state.loading || this.state.error) ? 'block' : 'none' }}>
 
-                <div style={{
-                    display: (this.state.loading || this.state.error) ? 'block' : 'none',
-                    width: "400px",
-                    height: "200px",
-                    position: "fixed",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: "white",
-                    zIndex: 1001
-                }}>
-
-                    { this.state.loading && <div>loading...</div> }
-                    { this.state.error && <div>Something went wrong! Service not available</div> }
+                    { this.state.loading && 
+                        <div className="loader">
+                            <div className="loader-abs"></div>
+                            <div className="loader-abs"></div>
+                        </div> }
+                    { this.state.error && <div className="error-msg">Something went wrong! Service not available<br/> Please try later!</div> }
                 </div>        
-            {
-                !this.state.loading &&
-                <MapContainer google={this.state.google} />
-            }
+                {
+                    !this.state.loading &&
+                    <MapContainer google={this.state.google} />
+                }
             </React.Fragment>
         );
     }
