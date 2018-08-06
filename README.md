@@ -5,7 +5,24 @@ Should display by our choice our best neighborhood and best destinations. For th
 
 ## How to run in development mode
 * fork the project
-* run ```npm install```
+* run ```npm install```      
+### Build production version
+* npm run build
+
+### Running production server
+- python -m http.server --directory build
+or 
+- serve build
+
+
+# Service worker
+Service worker provides caching for local contents as 
+well as dynamically added content such as google maps, 3rd party font,css etc.
+
+Service worker is disabled for development. In production mode it is enabled.
+For more information about this service worker
+[visit this site](https://goo.gl/SC7cgQ)
+
 #### (ToDoo: add following lines after passing the submition and replace my key with placeholder API_KEY:
 * Please provide your own Google Map API.
     * You can do it by following this link [Google Map API key](https://developers.google.com/maps/documentation/javascript/get-api-key)

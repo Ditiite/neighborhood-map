@@ -9,7 +9,7 @@ import weaterLogo from '../images/openweathermap.png';
 import PropTypes from 'prop-types';
 import { Weather } from './Weather';
 
-export class MapContainer extends Component {
+class MapContainer extends Component {
     state = {
         showingInfoWindow: true,
         activeMarker: null,
@@ -160,6 +160,7 @@ export class MapContainer extends Component {
                     />
                 }
                 <div className="map">
+                    
                     <Map
                         aria-label="location" 
                         role="application"
@@ -169,7 +170,8 @@ export class MapContainer extends Component {
                         center={this.state.activeMarker ? this.state.activeMarker.position : {}}
                         zoom={7}
                         onClick={this.onMapClicked}
-                        bounds={bounds}>
+                        bounds={bounds}
+                    >
 
                         {
                             filteredmarkers.map((mark, i) => {
@@ -220,7 +222,88 @@ MapContainer.propTypes = {
     google: PropTypes.object,
     LatLngBounds: PropTypes.func,
 }
-
+/* 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE'
+    apiKey: 'xAIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE'
 })(MapContainer)
+
+ */
+
+export default class ApiWrapper extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            google: null,
+            loading: true,
+            error: false
+        }
+
+        // Add google api callbacks
+        window.googleSuccess = () => {
+            console.log("Google loaded");
+            this.setState({
+                google: window.google,
+                loading: false,
+            })
+        }
+
+        window.gm_authFailure = () => {
+            console.log("Authentication error");
+            this.setState({
+                error: true
+            });
+        }
+    }
+
+    componentDidMount() {
+        // Load google api 
+        const scriptEl = document.createElement('script');
+        scriptEl.async = true;
+        scriptEl.src = "https://maps.googleapis.com/maps/api/js?key=xAIzaSyAi8HndyCibVRx205QFrZ2MVORDaGABPjE&callback=googleSuccess&libraries=places&v=3&language=en"
+        scriptEl.onerror = () => {
+            console.log("Error loading script");
+            this.setState({
+                error: true
+            });
+        }
+
+        document.body.appendChild(scriptEl);
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                <div className="overlay" style={{
+                    display: (this.state.loading || this.state.error)? 'block': 'none',
+                    width: "100vw",
+                    height: "100%",
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    backgroundColor: "rgba(50, 50, 50, 0.6)",
+                    zIndex: 1000
+                }} />
+
+                <div style={{
+                    display: (this.state.loading || this.state.error) ? 'block' : 'none',
+                    width: "400px",
+                    height: "200px",
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "white",
+                    zIndex: 1001
+                }}>
+
+                    { this.state.loading && <div>loading...</div> }
+                    { this.state.error && <div>Something went wrong! Service not available</div> }
+                </div>        
+            {
+                !this.state.loading &&
+                <MapContainer google={this.state.google} />
+            }
+            </React.Fragment>
+        );
+    }
+}
