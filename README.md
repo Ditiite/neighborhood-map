@@ -15,7 +15,7 @@ or
 - serve build
 
 
-# Service worker
+## Service worker
 Service worker provides caching for local contents as 
 well as dynamically added content such as google maps, 3rd party font,css etc.
 
