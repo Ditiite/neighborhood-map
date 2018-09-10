@@ -48,5 +48,8 @@ NEED TO UPDATE LINK
 * [Udacity JavaScript Style Guide](http://udacity.github.io/frontend-nanodegree-styleguide/javascript.html)
 * [Udacity Git Commit Message Style Guide](https://udacity.github.io/git-styleguide/)
 
+### Known issues
+The map is not rendered due to changes in API(not for free anymore).
+
 ### Author
 *Dita Rahmane*
