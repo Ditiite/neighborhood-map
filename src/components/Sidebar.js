@@ -52,7 +52,6 @@ export default class Sidebar extends Component {
                 this.props.updateMarkers(receivedMarkers);
             });
         });
-
     }
 
     /**
@@ -110,8 +109,7 @@ export default class Sidebar extends Component {
         });
     }
 
-
-    /* Filter the default list or list which getting from searh according to input value */
+    /* Filter the default list or list which getting from search according to input value */
     filterList = (event, places) => {
         const filterInputEl = document.querySelector("input[name=filter]");
         const filterBy = filterInputEl.value.toLowerCase();
@@ -139,8 +137,7 @@ export default class Sidebar extends Component {
         const placeTitle = event.target.dataset.placeTitle;
         this.props.selectMarkerByTitle(placeTitle);
     }
-
-    
+  
     render() {
         return (
             <aside className="sidebar">

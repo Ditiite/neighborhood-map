@@ -1,6 +1,6 @@
 
 /**
- * Get weather information from openweather map
+ * Get weather information from openWeather map
  * @param {string} lat 
  * @param {string} lng 
  * @retuns {WeatherInfo}
