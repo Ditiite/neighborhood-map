@@ -217,6 +217,7 @@ MapContainer.propTypes = {
   LatLngBounds: PropTypes.func
 };
 
+<<<<<<< HEAD
 export default class ApiWrapper extends Component {
   constructor(props) {
     super(props);
@@ -291,3 +292,6 @@ export default class ApiWrapper extends Component {
     );
   }
 }
+=======
+export default MapContainer;
+>>>>>>> 61106d64caf6ceb3740180e5b1dbeface83cfb08
