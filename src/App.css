@@ -1,157 +1,155 @@
 :root {
-	--text-color: rgb(40, 29, 100);
-	--bg-color:#e7dce9;
-	--pink: rgb(248, 86, 153);
+  --text-color: rgb(40, 29, 100);
+  --bg-color: #e7dce9;
+  /* --pink: rgb(248, 86, 153); */
+  --pink: #378b90;
+  --font: "Montserrat", sans-serif;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	outline-color: #86598b;
-	font-size: 16px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  font-size: 16px;
 }
 
 body {
-	font-family: sans-serif;
+  font-family: var(--font);
 }
+
 .map {
-	top: 72px;
-	bottom:0px;
-	width: 100%;
-	position: absolute;
-	right: 0px;
-	z-index: 0;
+  top: 55px;
+  bottom: 0px;
+  width: 100%;
+  position: absolute;
+  right: 0px;
+  z-index: 0;
 }
 
 /*=================
 SIDEBAR
 =================*/
 .sidebar {
-	width: 320px;
-	background: var(--bg-color);
-	min-height: 100vh;
-	max-height: 100%;
-	overflow-y: scroll;
-	position: absolute;
-	line-height: 2em;
-	padding: 20px;
-	opacity: 0.9;
-	z-index: 1;
-	padding-top: 100px;
-	box-shadow: 10px 10px 30px #a0a0a0;
-	transition: all ease-in-out 2s;
+  width: 320px;
+  background: #fff;
+  min-height: 100vh;
+  max-height: 100%;
+  overflow-y: scroll;
+  position: absolute;
+  line-height: 2em;
+  padding: 20px;
+  opacity: 0.9;
+  z-index: 1;
+  padding-top: 65px;
+  box-shadow: 10px 10px 30px #a0a0a0;
+  transition: all ease-in-out 2s;
 }
 
 .input {
-	border: none;
-	border-bottom: 2px solid var(--text-color);
-	background: transparent;
-	font-size: 1em;
-	padding: 10px;
-	padding-left: 0;
-	width: 187px;
+  border: none;
+  border-bottom: 2px solid var(--text-color);
+  background: transparent;
+  font-size: 1em;
+  padding: 10px;
+  padding-left: 0;
+  width: 187px;
 }
 
 .btn {
-	border: none; 
-	background: transparent;
-	text-transform: uppercase;
-	cursor: pointer;
-	padding: 10px;
-	width: auto;
-	color: var(--text-color);
-	box-sizing: border-box;
-	font-size: 0.9em;
+  border: none;
+  background: transparent;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 10px;
+  width: auto;
+  color: var(--text-color);
+  box-sizing: border-box;
+  font-size: 0.9em;
 }
 
 .display-btn:active,
 .btn:active {
-	transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 .place-names {
-	box-sizing: border-box;
-	color: var(--text-color);
-	text-transform: capitalize;
-	overflow-wrap: break-word;
-	list-style: none;
+  box-sizing: border-box;
+  color: var(--text-color);
+  text-transform: capitalize;
+  overflow-wrap: break-word;
+  list-style: none;
 }
 
 .place-names li {
-	padding: 10px 0 0 0;
+  padding: 10px 0 0 0;
+  cursor: pointer;
 }
 
 .place-names li:hover {
-	color: var(--pink);
+  color: var(--pink);
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 .sidebar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
- 
+
 .sidebar::-webkit-scrollbar-thumb {
-	background-color: rgb(192, 191, 191);
-	outline: 1px solid rgb(112, 128, 144);
-    -webkit-border-radius: 10px;
-	border-radius: 10px;
-    background: rgba(248, 86, 153, 0.8); 
-    -webkit-box-shadow: inset 0 0 6px rgba(240, 128, 128, 0.5);
+  background-color: rgb(185, 247, 250);
+  outline: none;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(55, 139, 144, 0.8);
+  -webkit-box-shadow: inset 0 0 6px rgba(185, 247, 250, 0.5);
 }
 
 ::-webkit-scrollbar-thumb:window-inactive {
-	background: rgba(252, 165, 179, 0.4); 
+  background: rgba(252, 165, 179, 0.4);
 }
 /*==================
 HEADER
 ====================*/
 .header {
-	width: 100%;
-	padding: 10px;
-	position: absolute;
-	z-index: 2;
-	color: var(--text-color);
-	/* background: transparent; */
-	background: var(--bg-color);
-	box-shadow: 10px 10px 30px #d2c6d3;
-	text-shadow: 10px 10px 10px silver;
-	font-family: 'Kaushan Script', cursive;
-	display: grid;
-	grid-template-areas:  
-		"btn title";
-	grid-template-columns: 320px 1fr;
-	justify-items: center;
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  color: var(--text-color);
+  background: #fff;
+  /* background: var(--bg-color); */
+  display: grid;
+  grid-template-areas: "btn title";
+  grid-template-columns: 320px 1fr;
 }
 
 .fa-fort-awesome {
-	color: var(--pink);
-	font-size: 2em;
-	margin-right: 20px;
+  color: var(--pink);
+  font-size: 2em;
+  margin-right: 20px;
 }
 
 .display-btn {
-	padding: 10px;
-	grid-area: btn;
-	background: transparent;
-	cursor: pointer;
-	text-transform: uppercase;
-	border: none;
-	color: var(--text-color);
-	text-shadow:  0 1px 2px rgba(255,255,255,0.7), 
-					 0 7px 4px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  grid-area: btn;
+  background: transparent;
+  cursor: pointer;
+  text-transform: uppercase;
+  border: none;
+  color: var(--text-color);
 }
 
 .header h1 {
-	color: var(--text-color);
-	font-size: 2em;
-	grid-area: title;
-	text-align: center;
-	align-self: center;
+  color: var(--text-color);
+  font-size: 1.5em;
+  grid-area: title;
+  text-align: center;
+  align-self: center;
 }
 
 /*================
@@ -159,194 +157,208 @@ INFO WINDOW
 ================*/
 /* Info window */
 .info-window {
-	display: grid;
-	grid-template-areas:  
-		"title title"
-		"address address"
-		"weather weather";
-	grid-gap: 10px;
-	color: rgb(252, 165, 179);
-	font-size: 0.7em;
-	max-width: 200px;
+  display: grid;
+  grid-template-areas:
+    "title title"
+    "address address"
+    "weather weather";
+  grid-gap: 10px;
+  color: var(--text-color);
+  font-size: 0.7em;
+  max-width: 200px;
 }
 
 .info-window h2 {
-	grid-area: title;
-	color: rgb(155, 100, 109);
-	font-size: 1.7em;
+  grid-area: title;
+  font-size: 1.7em;
 }
 
 .address {
-	grid-area: address;
+  grid-area: address;
 }
 
 .weather {
-	grid-area: weather;
-	display: grid;
-	grid-template-areas:  
-		"img des"
-		"img deg"
-		"title logo";
+  grid-area: weather;
+  display: grid;
+  grid-template-areas:
+    "img des"
+    "img deg"
+    "title logo";
 }
 
 /* Image for info window */
 .info-img {
-	grid-area: img;
-	height: 60px;
-	width: 60px;
-	justify-self: center;
+  grid-area: img;
+  height: 60px;
+  width: 60px;
+  justify-self: center;
 }
 
 .info-desc {
-	grid-area: des;
-	font-size: 1em;
+  grid-area: des;
+  font-size: 1em;
 }
 
 .info-temp {
-	grid-area: deg;
-	font-size: 1em;
+  grid-area: deg;
+  font-size: 1em;
 }
 
 /* Open weather map logo */
 .weather-logo {
-	grid-area: logo;
-	width: 20px;
-	height: 20px;
+  grid-area: logo;
+  width: 20px;
+  height: 20px;
 }
 
-.weather-title{
-	grid-area: title;
-	line-height: 8px;
+.weather-title {
+  grid-area: title;
+  line-height: 8px;
 }
 
-.weather-title p{
-	font-size: 0.7em;
+.weather-title p {
+  font-size: 0.7em;
 }
 
 /*====================
 ERROR MSG 
 ====================*/
-.alert-error, alert{
-	color: rgb(255, 0, 0);
-	position: absolute;
-	top: 80px;
-	left: 50%;
-	transform: translateX(-50%);
-	background-color: rgb(252, 248, 248);
-	z-index: 2000;
-	padding: 10px 15px;
-	padding: 50px;
-	box-shadow: 10px 10px 20px #86598b;
-	border-radius: 5px;
+.alert-error,
+alert {
+  color: rgb(255, 0, 0);
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(252, 248, 248);
+  z-index: 2000;
+  padding: 10px 15px;
+  padding: 50px;
+  box-shadow: 10px 10px 20px #86598b;
+  border-radius: 5px;
 }
-
 
 /*=====================
 LOADER when loading map
 =======================*/
 .loader {
-	margin: 0 auto 50px;
-	position: relative;
-	border: 10px solid var(--text-color);
-	border-radius: 50%;
-	border-top: 10px dotted var(--pink);
-	width: 70px;
-	height: 70px;
-	z-index: 1001;
-	-webkit-anomation: spin 2s linear infinite;
-	animation: spin 2s linear infinite;
+  margin: 0 auto 50px;
+  position: relative;
+  border: 10px solid var(--text-color);
+  border-radius: 50%;
+  border-top: 10px dotted var(--pink);
+  width: 70px;
+  height: 70px;
+  z-index: 1001;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
 
 .loader-abs {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	border: 10px solid var(--text-color);
-	border-radius: 50%;
-	border-top: 10px dotted var(--pink);
-	width: 30px;
-	height: 30px;
-	-webkit-anomation: spin2 2s linear infinite;
-	animation: spin2 1s linear infinite;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 10px solid var(--text-color);
+  border-radius: 50%;
+  border-top: 10px dotted var(--pink);
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin2 2s linear infinite;
+  animation: spin2 1s linear infinite;
 }
 
-
 @-webkit-keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @-webkit-keyframes spin2 {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(-360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 
 @keyframes spin2 {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(-360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 
 /*================================= 
 Error message from Google API error
 ==================================*/
 .overlay {
-	width: 100vw;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: rgba(50, 50, 50, 0.6);
-	z-index: 1000;
+  width: 100vw;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(50, 50, 50, 0.6);
+  z-index: 1000;
 }
 
 .error-msg-field {
-	min-height: 400px;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 1001;
+  min-height: 400px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
 }
 
 .error-msg {
-	position: relative;
-	padding: 20px;
-	background: #e6dee7;
-	box-shadow: 10px 10px 20px #69566b;
-	border-radius: 5px;
-	text-align: center;
-	line-height: 30px;
-	z-index: 1003;
+  position: relative;
+  padding: 20px;
+  background: #e6dee7;
+  box-shadow: 10px 10px 20px #69566b;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
+  z-index: 1003;
 }
 
 @media screen and (max-width: 450px) {
-	.sidebar {
-		width: 200px;
-		overflow-x: hidden;
-	}
+  .sidebar {
+    width: 200px;
+    overflow-x: hidden;
+  }
 
-	.header {
-		grid-template-areas:  
-		"title"
-		"btn ";
-	}
+  .header {
+    grid-template-areas:
+      "title"
+      "btn ";
+  }
 
-	.header h1 {
-		font-size: 1.2em;
-	}
+  .header h1 {
+    font-size: 1.2em;
+  }
 
-	.display-btn {
-		font-size: 0.7em;
-	}
+  .display-btn {
+    font-size: 0.7em;
+  }
 
-	.btn {
-		padding-left: 0;
-	}
+  .btn {
+    padding-left: 0;
+  }
 }

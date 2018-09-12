@@ -9,7 +9,7 @@ export default class ApiWrapper extends Component {
             loading: true,
             error: false
         }
-
+        
         // Add google api callbacks
         window.googleSuccess = () => {
             console.log("Google loaded");
