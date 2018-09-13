@@ -36,7 +36,9 @@ export default class Sidebar extends Component {
             this.props.alertError("Please provide search parameter");
             return;
         }
+        // Get list of places from google apis
         this.getPlaces(searchBy, (places) => {
+            // for each places find details such as coordinates
             this.createMarkers(places, (receivedMarkers, errorCount) => {
                 document.querySelector("input[name=filter]").value = "";
                 const receivedAmount = receivedMarkers.length;
