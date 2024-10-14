@@ -27,7 +27,7 @@ For more information about this service worker
 * Please provide your own Google Map API.
     * You can do it by following this link [Google Map API key](https://developers.google.com/maps/documentation/javascript/get-api-key)
     * To get open weather API please follow this link [OpenWeatherMap](https://openweathermap.org/api)
-    * Once you got your keys please place them in places markerd as API)
+    * Once you got your keys please place them in places marked as API)
 * To run aplication in localhost, in command line type: ``` npm start```
 * open **localhost:3000**
 
@@ -52,4 +52,4 @@ NEED TO UPDATE LINK
 The map is not rendered due to changes in API(not for free anymore).
 
 ### Author
-*Dita Rahmane*
+*Dita Yadava*
